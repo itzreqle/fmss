@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydb
+    volumes:
+      - ../database/postgres:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse-db
+    environment:
+      CLICKHOUSE_DB: analytics
+      CLICKHOUSE_USER: clickuser
+      CLICKHOUSE_PASSWORD: clickpass
+    volumes:
+      - ../database/clickhouse:/docker-entrypoint-initdb.d
+    ports:
+      - "8123:8123"  # HTTP interface
+      - "9000:9000"  # Native TCP interface
+    networks:
+      - app-network
+
+  auth-api:
+    image: mcr.microsoft.com/dotnet/runtime:8.0
+    container_name: auth-api
+    ports:
+      - "5000:80"
+    networks:
+      - app-network
+    # Uncomment and configure the following lines if you have a Dockerfile for your auth service
+    # build:
+    #   context: ../services/auth-api
+    #   dockerfile: Dockerfile
+
+networks:
+  app-network:
+    driver: bridge

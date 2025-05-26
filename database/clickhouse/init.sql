@@ -1,0 +1,2 @@
+-- database/clickhouse/init.sql
+-- Initialization Script
