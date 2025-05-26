@@ -30,16 +30,16 @@ services:
     networks:
       - app-network
 
-  auth-api:
+  auth:
     image: mcr.microsoft.com/dotnet/runtime:8.0
-    container_name: auth-api
+    container_name: auth
     ports:
       - "5000:80"
     networks:
       - app-network
     # Uncomment and configure the following lines if you have a Dockerfile for your auth service
     # build:
-    #   context: ../services/auth-api
+    #   context: ../services/auth
     #   dockerfile: Dockerfile
 
 networks:
