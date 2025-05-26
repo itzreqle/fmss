@@ -7,6 +7,6 @@
 - **postgres**: Main application DB
 - **clickhouse**: Analytical database for warehousing
 
-## Deployment
+## Deployment (Not implemented yet!)
 - Environment overlays: `k8s/overlays/dev`, `staging`, `prod`
 - Managed with Kubernetes + Kustomize
