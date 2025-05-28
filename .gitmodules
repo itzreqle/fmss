@@ -1,0 +1,3 @@
+[submodule "services/shared/datalens"]
+	path = services/shared/datalens
+	url = https://github.com/datalens-tech/datalens.git
