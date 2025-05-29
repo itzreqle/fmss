@@ -52,6 +52,10 @@ services:
       - "3000:3000"
     networks:
       - app-network
+    # Uncomment and configure the following lines if you have a Dockerfile for your frontend service
+    # build:
+    #   context: ../services/frontend
+    #   dockerfile: Dockerfile
 
 networks:
   app-network:
