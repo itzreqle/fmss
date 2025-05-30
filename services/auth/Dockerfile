@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /App
 
 # Expose port 5000 for the application
 EXPOSE 5000
@@ -11,22 +11,22 @@ EXPOSE 5000
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 # Set the working directory for the build process
-WORKDIR /src
+WORKDIR /Src
 
 # Copy all files from the current directory to the container
 COPY . .
 
 # Publish the application in Release mode to the /app/publish directory
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish -c Release -o /App/Publish
 
 # Create the final image based on the runtime image
 FROM base AS final
 
 # Set the working directory for the final image
-WORKDIR /app
+WORKDIR /App
 
 # Copy the published output from the build stage to the final image
-COPY --from=build /app/publish .
+COPY --from=build /App/Publish .
 
 # Set the entry point to run the application
-ENTRYPOINT ["dotnet", "YourAuthApp.dll"]
+ENTRYPOINT ["dotnet", "Roza.AuthService.dll"]

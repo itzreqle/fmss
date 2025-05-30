@@ -1,0 +1,6 @@
+@Roza.AuthService_HostAddress = http://localhost:5190
+
+GET {{Roza.AuthService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
