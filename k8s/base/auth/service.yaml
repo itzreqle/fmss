@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+        - name: auth-service
+          image: <YOUR_DOCKER_IMAGE>
+          ports:
+            - containerPort: 8080
+          env:
+            # Add your environment variables here if needed
+            # - name: ASPNETCORE_ENVIRONMENT
+            #   value: "Production"
+          volumeMounts:
+            - name: resources-volume
+              mountPath: /App/Resources
+      volumes:
+        - name: resources-volume
+          configMap:
+            name: auth-service-resources
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: auth-service
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-service-resources
+data:
+  public.key: |
+    # Paste your public.key content here
+  private.key: |
+    # Paste your private.key content here 
