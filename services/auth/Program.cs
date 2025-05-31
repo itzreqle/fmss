@@ -11,11 +11,11 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// اضافه کردن DbContext
+// Add DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseInMemoryDatabase("RozaAuthDb")); // بعداً به UseNpgsql تغییر می‌دیم
+    options.UseInMemoryDatabase("RozaAuthDb")); // Will change to UseNpgsql later
 
-// اضافه کردن Identity
+// Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
@@ -23,7 +23,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
 
 
-// اضافه کردن سرویس JWT
+// Add JWT service
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddSingleton<IPublicRsaKeyProvider, PublicRsaKeyProvider>();
@@ -45,7 +45,7 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         ValidateLifetime = true,
-        IssuerSigningKey = publicKeyProvider.GetKey(), // استفاده از کلید خصوصی RSA
+        IssuerSigningKey = publicKeyProvider.GetKey(), // Use RSA private key
         ValidateIssuerSigningKey = true,
     };
 });
@@ -66,6 +66,7 @@ using (var scope = app.Services.CreateScope())
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapGet("/", () => Results.Ok("Auth Service is running!"));
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

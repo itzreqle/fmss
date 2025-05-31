@@ -40,8 +40,8 @@ namespace Roza.AuthService.Services
 
             claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-            // بارگذاری کلید خصوصی RSA
-            var creds = new SigningCredentials(_signingKey, SecurityAlgorithms.RsaSha256); // برای RSA
+            // Load RSA private key
+            var creds = new SigningCredentials(_signingKey, SecurityAlgorithms.RsaSha256); // For RSA
 
             var token = new JwtSecurityToken(
                 issuer: _config["Jwt:Issuer"],
@@ -61,7 +61,7 @@ namespace Roza.AuthService.Services
             {
                 Token = refreshToken,
                 UserId = user.Id,
-                ExpiryDate = DateTime.UtcNow.AddDays(7), // مثلاً ۷ روز اعتبار
+                ExpiryDate = DateTime.UtcNow.AddDays(7), // For example, 7 days validity
                 IsRevoked = false
             };
 

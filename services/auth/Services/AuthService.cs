@@ -39,7 +39,7 @@ namespace Roza.AuthService.Services
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null || !await _userManager.CheckPasswordAsync(user, model.Password))
-                return AuthResult.Failed("ایمیل یا رمز عبور اشتباه است");
+                return AuthResult.Failed("Email or password is incorrect");
 
             var accessToken = await _tokenService.GenerateTokenAsync(user);
             var refreshToken = await _tokenService.GenerateRefreshToken(user);
@@ -54,7 +54,7 @@ namespace Roza.AuthService.Services
                 .FirstOrDefaultAsync(rt => rt.Token == refreshToken && !rt.IsRevoked);
 
             if (storedToken == null || storedToken.ExpiryDate < DateTime.UtcNow)
-                return AuthResult.Failed("توکن نامعتبر یا منقضی شده است.");
+                return AuthResult.Failed("Token is invalid or expired.");
 
             var newAccessToken = await _tokenService.GenerateTokenAsync(storedToken.User);
             var newRefreshToken = await _tokenService.GenerateRefreshToken(storedToken.User);
@@ -86,7 +86,7 @@ namespace Roza.AuthService.Services
             return new AuthResult
             {
                 Succeeded = true,
-                Message = "عملیات موفق بود",
+                Message = "Operation was successful",
                 AccessToken = accessToken,
                 RefreshToken = refreshToken
             };
