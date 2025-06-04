@@ -16,3 +16,9 @@ EXPOSE 3000
 
 # Start the development server
 CMD ["npm", "run", "dev"] 
+
+# Build the application
+# RUN npm run build
+
+# Start the production server
+# CMD ["npm", "start"] 
