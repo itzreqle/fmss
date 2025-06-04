@@ -1,0 +1,3 @@
+# .gitignore
+services/devops/teamcity/data/
+services/devops/teamcity/logs/
