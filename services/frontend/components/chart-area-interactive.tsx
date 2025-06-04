@@ -122,17 +122,18 @@ const chartData = [
   { date: "2024-06-30", desktop: 446, mobile: 400 },
 ]
 
+// Fixed chart config to use consistent color references, could be better in oklch(var(color))
 const chartConfig = {
   visitors: {
     label: "Visitors",
   },
   desktop: {
     label: "Desktop",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-2)", 
   },
   mobile: {
     label: "Mobile",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-3)",
   },
 } satisfies ChartConfig
 
